@@ -1,14 +1,9 @@
 {
   "npmScope": "demo",
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "main" },
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -17,15 +12,53 @@
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
-      }
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
     }
   },
-  "projects": {}
+  "projects": {
+    "api": { "tags": [] },
+    "api-account-data-access": { "tags": ["scope:api", "type:data-access"] },
+    "api-account-feature": { "tags": ["scope:api", "type:feature"] },
+    "api-auth-data-access": { "tags": ["scope:api", "type:data-access"] },
+    "api-auth-feature": { "tags": ["scope:api", "type:feature"] },
+    "api-auth-util": { "tags": ["scope:api", "type:util"] },
+    "api-core-data-access": { "tags": ["scope:api", "type:data-access"] },
+    "api-core-feature": { "tags": ["scope:api", "type:feature"] },
+    "api-core-util": { "tags": ["scope:api", "type:util"] },
+    "api-user-data-access": { "tags": ["scope:api", "type:data-access"] },
+    "api-user-feature": { "tags": ["scope:api", "type:feature"] },
+    "api-e2e": { "tags": [] },
+    "web": { "tags": [] },
+    "web-e2e": { "tags": [], "implicitDependencies": ["web"] },
+    "web-assets": { "tags": ["scope:web", "type:assets"] },
+    "web-about-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-account-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-account-ui": { "tags": ["scope:web", "type:ui"] },
+    "web-admin-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-admin-ui": { "tags": ["scope:web", "type:ui"] },
+    "web-auth-data-access": { "tags": ["scope:web", "type:data-access"] },
+    "web-auth-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-auth-ui": { "tags": ["scope:web", "type:ui"] },
+    "web-core-data-access": { "tags": ["scope:web", "type:data-access"] },
+    "web-core-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-dashboard-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-shell-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-layout": { "tags": ["scope:web", "type:layout"] },
+    "web-style": { "tags": ["scope:web", "type:style"] },
+    "web-ui-button": { "tags": ["scope:web", "type:ui"] },
+    "web-ui-form": { "tags": ["scope:web", "type:ui"] },
+    "web-ui-loader": { "tags": ["scope:web", "type:ui"] },
+    "web-ui-icon": { "tags": ["scope:web", "type:ui"] },
+    "web-ui-page": { "tags": ["scope:web", "type:ui"] },
+    "web-ui-page-header": { "tags": ["scope:web", "type:ui"] },
+    "web-ui-sidebar-page": { "tags": ["scope:web", "type:ui"] },
+    "web-ui-table": { "tags": ["scope:web", "type:ui"] },
+    "shared-util-sdk": { "tags": ["scope:shared", "type:util"] }
+  },
+  "plugins": {
+    "@nxpm/stack": {
+      "api": { "tech": "@nrwl/nest", "project": "api" },
+      "web": { "tech": "@nrwl/angular", "project": "web" }
+    }
+  }
 }

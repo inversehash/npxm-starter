@@ -49,7 +49,11 @@
       "@demo/web/ui/page-header": ["libs/web/ui/page-header/src/index.ts"],
       "@demo/web/ui/sidebar-page": ["libs/web/ui/sidebar-page/src/index.ts"],
       "@demo/web/ui/table": ["libs/web/ui/table/src/index.ts"],
-      "@demo/shared/util/sdk": ["libs/shared/util/sdk/src/index.ts"]
+      "@demo/shared/util/sdk": ["libs/shared/util/sdk/src/index.ts"],
+      "@demo/api/company/data-access": ["libs/api/company/data-access/src/index.ts"],
+      "@demo/api/company/feature": ["libs/api/company/feature/src/index.ts"],
+      "@demo/web/company/feature": ["libs/web/company/feature/src/index.ts"],
+      "@demo/web/company/ui": ["libs/web/company/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

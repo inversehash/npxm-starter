@@ -19,9 +19,9 @@ export default async function (
     dryRun: boolean
   },
 ) {
-  console.log('nx g @nxpm/api-crud ${name} ')
+  console.log('yarn nx g @nxpm/stack:api-crud ${name} ')
   console.log('yarn prisma:apply')
-  console.log('nx g @nxpm/web-crud ${name} ')
+  console.log('yarn nx g @nxpm/stack:web-crud ${name} ')
   console.log('yarn build:sdk ')
   console.log({ name, model, nameField, plural, dryRun })
 }

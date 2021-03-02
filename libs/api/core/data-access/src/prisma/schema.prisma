@@ -45,3 +45,17 @@ model Email {
   // Enable when this is resolved https://github.com/prisma/prisma/issues/3387
   // @@unique([ownerId, primary])
 }
+
+model Company {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  name            String
+  addressLine1    String?
+  addressLine2    String?
+  city            String?
+  stateOrProvince String?
+  postalCode      String?
+  country         String?
+  phoneNumber     String?
+}

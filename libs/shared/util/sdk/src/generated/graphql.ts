@@ -39,12 +39,40 @@ export type AccountUpdateProfileInput = {
   phone?: Maybe<Scalars['String']>
 }
 
+export type AdminCreateCompanyInput = {
+  addressLine1: Scalars['String']
+  addressLine2: Scalars['String']
+  city: Scalars['String']
+  country: Scalars['String']
+  name: Scalars['String']
+  phoneNumber: Scalars['String']
+  postalCode: Scalars['String']
+  stateOrProvince: Scalars['String']
+}
+
 export type AdminCreateUserInput = {
   email: Scalars['String']
   firstName?: Maybe<Scalars['String']>
   lastName?: Maybe<Scalars['String']>
   role: Role
   username?: Maybe<Scalars['String']>
+}
+
+export type AdminListCompanyInput = {
+  limit?: Maybe<Scalars['Int']>
+  name?: Maybe<Scalars['String']>
+  skip?: Maybe<Scalars['Int']>
+}
+
+export type AdminUpdateCompanyInput = {
+  addressLine1?: Maybe<Scalars['String']>
+  addressLine2?: Maybe<Scalars['String']>
+  city?: Maybe<Scalars['String']>
+  country?: Maybe<Scalars['String']>
+  name?: Maybe<Scalars['String']>
+  phoneNumber?: Maybe<Scalars['String']>
+  postalCode?: Maybe<Scalars['String']>
+  stateOrProvince?: Maybe<Scalars['String']>
 }
 
 export type AdminUpdateUserInput = {
@@ -62,6 +90,21 @@ export type AuthToken = {
   __typename?: 'AuthToken'
   /** JWT Bearer token */
   token: Scalars['String']
+}
+
+export type Company = {
+  __typename?: 'Company'
+  addressLine1?: Maybe<Scalars['String']>
+  addressLine2?: Maybe<Scalars['String']>
+  city?: Maybe<Scalars['String']>
+  country?: Maybe<Scalars['String']>
+  createdAt?: Maybe<Scalars['DateTime']>
+  id?: Maybe<Scalars['String']>
+  name?: Maybe<Scalars['String']>
+  phoneNumber?: Maybe<Scalars['String']>
+  postalCode?: Maybe<Scalars['String']>
+  stateOrProvince?: Maybe<Scalars['String']>
+  updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export type CorePaging = {
@@ -110,9 +153,12 @@ export type Mutation = {
   accountUpdatePassword?: Maybe<Scalars['Boolean']>
   accountUpdateProfile?: Maybe<User>
   accountUpdateUsername?: Maybe<User>
+  adminCreateCompany?: Maybe<Company>
   adminCreateUser?: Maybe<User>
+  adminDeleteCompany?: Maybe<Company>
   adminDeleteUser?: Maybe<User>
   adminSetUserPassword?: Maybe<User>
+  adminUpdateCompany?: Maybe<Company>
   adminUpdateUser?: Maybe<User>
   intercomPub?: Maybe<IntercomMessage>
   login?: Maybe<AuthToken>
@@ -152,8 +198,16 @@ export type MutationAccountUpdateUsernameArgs = {
   username: Scalars['String']
 }
 
+export type MutationAdminCreateCompanyArgs = {
+  input: AdminCreateCompanyInput
+}
+
 export type MutationAdminCreateUserArgs = {
   input: AdminCreateUserInput
+}
+
+export type MutationAdminDeleteCompanyArgs = {
+  companyId: Scalars['String']
 }
 
 export type MutationAdminDeleteUserArgs = {
@@ -163,6 +217,11 @@ export type MutationAdminDeleteUserArgs = {
 export type MutationAdminSetUserPasswordArgs = {
   password: Scalars['String']
   userId: Scalars['String']
+}
+
+export type MutationAdminUpdateCompanyArgs = {
+  companyId: Scalars['String']
+  input: AdminUpdateCompanyInput
 }
 
 export type MutationAdminUpdateUserArgs = {
@@ -189,15 +248,31 @@ export type Query = {
   accountEmails?: Maybe<Array<Email>>
   accountProfile?: Maybe<User>
   accountUsernameAvailable?: Maybe<Scalars['Boolean']>
+  adminCompany?: Maybe<Company>
+  adminCompanys?: Maybe<Array<Company>>
+  adminCountCompanys?: Maybe<CorePaging>
   adminCountUsers?: Maybe<CorePaging>
   adminUser?: Maybe<User>
   adminUsers?: Maybe<Array<User>>
   me?: Maybe<User>
+  publicCompanys?: Maybe<Array<Company>>
   uptime?: Maybe<Scalars['Float']>
 }
 
 export type QueryAccountUsernameAvailableArgs = {
   username: Scalars['String']
+}
+
+export type QueryAdminCompanyArgs = {
+  companyId: Scalars['String']
+}
+
+export type QueryAdminCompanysArgs = {
+  input?: Maybe<AdminListCompanyInput>
+}
+
+export type QueryAdminCountCompanysArgs = {
+  input?: Maybe<AdminListCompanyInput>
 }
 
 export type QueryAdminCountUsersArgs = {
@@ -365,6 +440,77 @@ export type RegisterMutation = { __typename?: 'Mutation' } & {
   register?: Maybe<{ __typename?: 'AuthToken' } & AuthTokenDetailsFragment>
 }
 
+export type CompanyDetailsFragment = { __typename?: 'Company' } & Pick<
+  Company,
+  | 'id'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'name'
+  | 'addressLine1'
+  | 'addressLine2'
+  | 'city'
+  | 'stateOrProvince'
+  | 'postalCode'
+  | 'country'
+  | 'phoneNumber'
+>
+
+export type AdminCompanysQueryVariables = Exact<{
+  input?: Maybe<AdminListCompanyInput>
+}>
+
+export type AdminCompanysQuery = { __typename?: 'Query' } & {
+  items?: Maybe<Array<{ __typename?: 'Company' } & CompanyDetailsFragment>>
+  count?: Maybe<{ __typename?: 'CorePaging' } & CorePagingDetailsFragment>
+}
+
+export type AdminCountCompanysQueryVariables = Exact<{
+  input?: Maybe<AdminListCompanyInput>
+}>
+
+export type AdminCountCompanysQuery = { __typename?: 'Query' } & {
+  count?: Maybe<{ __typename?: 'CorePaging' } & CorePagingDetailsFragment>
+}
+
+export type AdminCompanyQueryVariables = Exact<{
+  companyId: Scalars['String']
+}>
+
+export type AdminCompanyQuery = { __typename?: 'Query' } & {
+  item?: Maybe<{ __typename?: 'Company' } & CompanyDetailsFragment>
+}
+
+export type PublicCompanysQueryVariables = Exact<{ [key: string]: never }>
+
+export type PublicCompanysQuery = { __typename?: 'Query' } & {
+  companys?: Maybe<Array<{ __typename?: 'Company' } & CompanyDetailsFragment>>
+}
+
+export type AdminCreateCompanyMutationVariables = Exact<{
+  input: AdminCreateCompanyInput
+}>
+
+export type AdminCreateCompanyMutation = { __typename?: 'Mutation' } & {
+  created?: Maybe<{ __typename?: 'Company' } & CompanyDetailsFragment>
+}
+
+export type AdminUpdateCompanyMutationVariables = Exact<{
+  companyId: Scalars['String']
+  input: AdminUpdateCompanyInput
+}>
+
+export type AdminUpdateCompanyMutation = { __typename?: 'Mutation' } & {
+  updated?: Maybe<{ __typename?: 'Company' } & CompanyDetailsFragment>
+}
+
+export type AdminDeleteCompanyMutationVariables = Exact<{
+  companyId: Scalars['String']
+}>
+
+export type AdminDeleteCompanyMutation = { __typename?: 'Mutation' } & {
+  deleted?: Maybe<{ __typename?: 'Company' } & CompanyDetailsFragment>
+}
+
 export type UptimeQueryVariables = Exact<{ [key: string]: never }>
 
 export type UptimeQuery = { __typename?: 'Query' } & Pick<Query, 'uptime'>
@@ -460,6 +606,21 @@ export type AdminDeleteUserMutation = { __typename?: 'Mutation' } & {
 export const AuthTokenDetailsFragmentDoc = gql`
   fragment AuthTokenDetails on AuthToken {
     token
+  }
+`
+export const CompanyDetailsFragmentDoc = gql`
+  fragment CompanyDetails on Company {
+    id
+    createdAt
+    updatedAt
+    name
+    addressLine1
+    addressLine2
+    city
+    stateOrProvince
+    postalCode
+    country
+    phoneNumber
   }
 `
 export const CorePagingDetailsFragmentDoc = gql`
@@ -809,6 +970,152 @@ export class RegisterGQL extends Apollo.Mutation<RegisterMutation, RegisterMutat
     super(apollo)
   }
 }
+export const AdminCompanysDocument = gql`
+  query AdminCompanys($input: AdminListCompanyInput) {
+    items: adminCompanys(input: $input) {
+      ...CompanyDetails
+    }
+    count: adminCountCompanys(input: $input) {
+      ...CorePagingDetails
+    }
+  }
+  ${CompanyDetailsFragmentDoc}
+  ${CorePagingDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminCompanysGQL extends Apollo.Query<AdminCompanysQuery, AdminCompanysQueryVariables> {
+  document = AdminCompanysDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminCountCompanysDocument = gql`
+  query AdminCountCompanys($input: AdminListCompanyInput) {
+    count: adminCountCompanys(input: $input) {
+      ...CorePagingDetails
+    }
+  }
+  ${CorePagingDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminCountCompanysGQL extends Apollo.Query<AdminCountCompanysQuery, AdminCountCompanysQueryVariables> {
+  document = AdminCountCompanysDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminCompanyDocument = gql`
+  query AdminCompany($companyId: String!) {
+    item: adminCompany(companyId: $companyId) {
+      ...CompanyDetails
+    }
+  }
+  ${CompanyDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminCompanyGQL extends Apollo.Query<AdminCompanyQuery, AdminCompanyQueryVariables> {
+  document = AdminCompanyDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const PublicCompanysDocument = gql`
+  query PublicCompanys {
+    companys: publicCompanys {
+      ...CompanyDetails
+    }
+  }
+  ${CompanyDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class PublicCompanysGQL extends Apollo.Query<PublicCompanysQuery, PublicCompanysQueryVariables> {
+  document = PublicCompanysDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminCreateCompanyDocument = gql`
+  mutation AdminCreateCompany($input: AdminCreateCompanyInput!) {
+    created: adminCreateCompany(input: $input) {
+      ...CompanyDetails
+    }
+  }
+  ${CompanyDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminCreateCompanyGQL extends Apollo.Mutation<
+  AdminCreateCompanyMutation,
+  AdminCreateCompanyMutationVariables
+> {
+  document = AdminCreateCompanyDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminUpdateCompanyDocument = gql`
+  mutation AdminUpdateCompany($companyId: String!, $input: AdminUpdateCompanyInput!) {
+    updated: adminUpdateCompany(companyId: $companyId, input: $input) {
+      ...CompanyDetails
+    }
+  }
+  ${CompanyDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminUpdateCompanyGQL extends Apollo.Mutation<
+  AdminUpdateCompanyMutation,
+  AdminUpdateCompanyMutationVariables
+> {
+  document = AdminUpdateCompanyDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminDeleteCompanyDocument = gql`
+  mutation AdminDeleteCompany($companyId: String!) {
+    deleted: adminDeleteCompany(companyId: $companyId) {
+      ...CompanyDetails
+    }
+  }
+  ${CompanyDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminDeleteCompanyGQL extends Apollo.Mutation<
+  AdminDeleteCompanyMutation,
+  AdminDeleteCompanyMutationVariables
+> {
+  document = AdminDeleteCompanyDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
 export const UptimeDocument = gql`
   query Uptime {
     uptime
@@ -1017,6 +1324,13 @@ export class ApolloAngularSDK {
     private logoutGql: LogoutGQL,
     private loginGql: LoginGQL,
     private registerGql: RegisterGQL,
+    private adminCompanysGql: AdminCompanysGQL,
+    private adminCountCompanysGql: AdminCountCompanysGQL,
+    private adminCompanyGql: AdminCompanyGQL,
+    private publicCompanysGql: PublicCompanysGQL,
+    private adminCreateCompanyGql: AdminCreateCompanyGQL,
+    private adminUpdateCompanyGql: AdminUpdateCompanyGQL,
+    private adminDeleteCompanyGql: AdminDeleteCompanyGQL,
     private uptimeGql: UptimeGQL,
     private intercomPubGql: IntercomPubGQL,
     private intercomSubGql: IntercomSubGQL,
@@ -1141,6 +1455,74 @@ export class ApolloAngularSDK {
     options?: MutationOptionsAlone<RegisterMutation, RegisterMutationVariables>,
   ) {
     return this.registerGql.mutate(variables, options)
+  }
+
+  adminCompanys(variables?: AdminCompanysQueryVariables, options?: QueryOptionsAlone<AdminCompanysQueryVariables>) {
+    return this.adminCompanysGql.fetch(variables, options)
+  }
+
+  adminCompanysWatch(
+    variables?: AdminCompanysQueryVariables,
+    options?: WatchQueryOptionsAlone<AdminCompanysQueryVariables>,
+  ) {
+    return this.adminCompanysGql.watch(variables, options)
+  }
+
+  adminCountCompanys(
+    variables?: AdminCountCompanysQueryVariables,
+    options?: QueryOptionsAlone<AdminCountCompanysQueryVariables>,
+  ) {
+    return this.adminCountCompanysGql.fetch(variables, options)
+  }
+
+  adminCountCompanysWatch(
+    variables?: AdminCountCompanysQueryVariables,
+    options?: WatchQueryOptionsAlone<AdminCountCompanysQueryVariables>,
+  ) {
+    return this.adminCountCompanysGql.watch(variables, options)
+  }
+
+  adminCompany(variables: AdminCompanyQueryVariables, options?: QueryOptionsAlone<AdminCompanyQueryVariables>) {
+    return this.adminCompanyGql.fetch(variables, options)
+  }
+
+  adminCompanyWatch(
+    variables: AdminCompanyQueryVariables,
+    options?: WatchQueryOptionsAlone<AdminCompanyQueryVariables>,
+  ) {
+    return this.adminCompanyGql.watch(variables, options)
+  }
+
+  publicCompanys(variables?: PublicCompanysQueryVariables, options?: QueryOptionsAlone<PublicCompanysQueryVariables>) {
+    return this.publicCompanysGql.fetch(variables, options)
+  }
+
+  publicCompanysWatch(
+    variables?: PublicCompanysQueryVariables,
+    options?: WatchQueryOptionsAlone<PublicCompanysQueryVariables>,
+  ) {
+    return this.publicCompanysGql.watch(variables, options)
+  }
+
+  adminCreateCompany(
+    variables: AdminCreateCompanyMutationVariables,
+    options?: MutationOptionsAlone<AdminCreateCompanyMutation, AdminCreateCompanyMutationVariables>,
+  ) {
+    return this.adminCreateCompanyGql.mutate(variables, options)
+  }
+
+  adminUpdateCompany(
+    variables: AdminUpdateCompanyMutationVariables,
+    options?: MutationOptionsAlone<AdminUpdateCompanyMutation, AdminUpdateCompanyMutationVariables>,
+  ) {
+    return this.adminUpdateCompanyGql.mutate(variables, options)
+  }
+
+  adminDeleteCompany(
+    variables: AdminDeleteCompanyMutationVariables,
+    options?: MutationOptionsAlone<AdminDeleteCompanyMutation, AdminDeleteCompanyMutationVariables>,
+  ) {
+    return this.adminDeleteCompanyGql.mutate(variables, options)
   }
 
   uptime(variables?: UptimeQueryVariables, options?: QueryOptionsAlone<UptimeQueryVariables>) {

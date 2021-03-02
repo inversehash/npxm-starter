@@ -12,6 +12,11 @@ const routes: Routes = [
     children: [
       // Application routes here
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+{
+        path: 'companys',
+        loadChildren: () =>
+          import('@demo/web/company/feature').then((m) => m.WebCompanyFeatureModule)
+        },
       {
         path: 'about',
         loadChildren: () => import('@demo/web/about/feature').then((m) => m.WebAboutFeatureModule),

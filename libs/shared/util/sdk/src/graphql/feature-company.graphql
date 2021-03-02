@@ -1,0 +1,58 @@
+fragment CompanyDetails on Company {
+  id
+  createdAt
+  updatedAt
+  name
+  addressLine1
+  addressLine2
+  city
+  stateOrProvince
+  postalCode
+  country
+  phoneNumber
+}
+
+query AdminCompanys($input: AdminListCompanyInput) {
+  items: adminCompanys(input: $input) {
+    ...CompanyDetails
+  }
+  count: adminCountCompanys(input: $input) {
+    ...CorePagingDetails
+  }
+}
+
+query AdminCountCompanys($input: AdminListCompanyInput) {
+  count: adminCountCompanys(input: $input) {
+    ...CorePagingDetails
+  }
+}
+
+query AdminCompany($companyId: String!) {
+  item: adminCompany(companyId: $companyId) {
+    ...CompanyDetails
+  }
+}
+
+query PublicCompanys {
+  companys : publicCompanys {
+    ...CompanyDetails
+  }
+}
+
+mutation AdminCreateCompany($input: AdminCreateCompanyInput!) {
+  created: adminCreateCompany(input: $input) {
+    ...CompanyDetails
+  }
+}
+
+mutation AdminUpdateCompany($companyId: String!, $input: AdminUpdateCompanyInput!) {
+  updated: adminUpdateCompany(companyId: $companyId, input: $input) {
+    ...CompanyDetails
+  }
+}
+
+mutation AdminDeleteCompany($companyId: String!) {
+  deleted: adminDeleteCompany(companyId: $companyId) {
+    ...CompanyDetails
+  }
+}

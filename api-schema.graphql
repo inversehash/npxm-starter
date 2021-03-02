@@ -22,12 +22,40 @@ input AccountUpdateProfileInput {
   phone: String
 }
 
+input AdminCreateCompanyInput {
+  addressLine1: String!
+  addressLine2: String!
+  city: String!
+  country: String!
+  name: String!
+  phoneNumber: String!
+  postalCode: String!
+  stateOrProvince: String!
+}
+
 input AdminCreateUserInput {
   email: String!
   firstName: String
   lastName: String
   role: Role!
   username: String
+}
+
+input AdminListCompanyInput {
+  limit: Int = 10
+  name: String
+  skip: Int = 0
+}
+
+input AdminUpdateCompanyInput {
+  addressLine1: String
+  addressLine2: String
+  city: String
+  country: String
+  name: String
+  phoneNumber: String
+  postalCode: String
+  stateOrProvince: String
 }
 
 input AdminUpdateUserInput {
@@ -44,6 +72,20 @@ input AdminUpdateUserInput {
 type AuthToken {
   """JWT Bearer token"""
   token: String!
+}
+
+type Company {
+  addressLine1: String
+  addressLine2: String
+  city: String
+  country: String
+  createdAt: DateTime
+  id: String
+  name: String
+  phoneNumber: String
+  postalCode: String
+  stateOrProvince: String
+  updatedAt: DateTime
 }
 
 type CorePaging {
@@ -98,9 +140,12 @@ type Mutation {
   accountUpdatePassword(input: AccountUpdatePasswordInput!): Boolean
   accountUpdateProfile(input: AccountUpdateProfileInput!): User
   accountUpdateUsername(username: String!): User
+  adminCreateCompany(input: AdminCreateCompanyInput!): Company
   adminCreateUser(input: AdminCreateUserInput!): User
+  adminDeleteCompany(companyId: String!): Company
   adminDeleteUser(userId: String!): User
   adminSetUserPassword(password: String!, userId: String!): User
+  adminUpdateCompany(companyId: String!, input: AdminUpdateCompanyInput!): Company
   adminUpdateUser(input: AdminUpdateUserInput!, userId: String!): User
   intercomPub(payload: JSON, scope: String, type: String!): IntercomMessage
   login(input: LoginInput!): AuthToken
@@ -112,10 +157,14 @@ type Query {
   accountEmails: [Email!]
   accountProfile: User
   accountUsernameAvailable(username: String!): Boolean
+  adminCompany(companyId: String!): Company
+  adminCompanys(input: AdminListCompanyInput): [Company!]
+  adminCountCompanys(input: AdminListCompanyInput): CorePaging
   adminCountUsers(paging: CorePagingInput): CorePaging
   adminUser(userId: String!): User
   adminUsers(paging: CorePagingInput): [User!]
   me: User
+  publicCompanys: [Company!]
   uptime: Float
 }
 

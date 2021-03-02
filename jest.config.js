@@ -37,5 +37,9 @@ module.exports = {
     '<rootDir>/libs/web/ui/sidebar-page',
     '<rootDir>/libs/web/ui/table',
     '<rootDir>/libs/shared/util/sdk',
+    '<rootDir>/libs/api/company/data-access',
+    '<rootDir>/libs/api/company/feature',
+    '<rootDir>/libs/web/company/feature',
+    '<rootDir>/libs/web/company/ui',
   ],
 }

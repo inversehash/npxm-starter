@@ -41,5 +41,9 @@ module.exports = {
     '<rootDir>/libs/api/company/feature',
     '<rootDir>/libs/web/company/feature',
     '<rootDir>/libs/web/company/ui',
+    '<rootDir>/libs/api/reporter/data-access',
+    '<rootDir>/libs/api/reporter/feature',
+    '<rootDir>/libs/web/reporter/feature',
+    '<rootDir>/libs/web/reporter/ui',
   ],
 }

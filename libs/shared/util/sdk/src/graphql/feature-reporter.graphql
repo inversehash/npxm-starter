@@ -1,0 +1,59 @@
+fragment ReporterDetails on Reporter {
+  id
+  createdAt
+  updatedAt
+  name
+  addressLine1
+  addressLine2
+  addressCity
+  addressState
+  addressPostalCode
+  phoneNumber
+  profession
+  faxNumber
+}
+
+query AdminReporters($input: AdminListReporterInput) {
+  items: adminReporters(input: $input) {
+    ...ReporterDetails
+  }
+  count: adminCountReporters(input: $input) {
+    ...CorePagingDetails
+  }
+}
+
+query AdminCountReporters($input: AdminListReporterInput) {
+  count: adminCountReporters(input: $input) {
+    ...CorePagingDetails
+  }
+}
+
+query AdminReporter($reporterId: String!) {
+  item: adminReporter(reporterId: $reporterId) {
+    ...ReporterDetails
+  }
+}
+
+mutation AdminCreateReporter($input: AdminCreateReporterInput!) {
+  created: adminCreateReporter(input: $input) {
+    ...ReporterDetails
+  }
+}
+
+mutation AdminUpdateReporter($reporterId: String!, $input: AdminUpdateReporterInput!) {
+  updated: adminUpdateReporter(reporterId: $reporterId, input: $input) {
+    ...ReporterDetails
+  }
+}
+
+mutation AdminDeleteReporter($reporterId: String!) {
+  deleted: adminDeleteReporter(reporterId: $reporterId) {
+    ...ReporterDetails
+  }
+}
+
+query PublicReporters {
+  reporter : publicReporters {
+    ...ReporterDetails
+  }
+}

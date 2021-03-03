@@ -33,6 +33,18 @@ input AdminCreateCompanyInput {
   stateOrProvince: String!
 }
 
+input AdminCreateReporterInput {
+  addressCity: String
+  addressLine1: String
+  addressLine2: String
+  addressPostalCode: String
+  addressState: String
+  faxNumber: String
+  name: String!
+  phoneNumber: String
+  profession: String
+}
+
 input AdminCreateUserInput {
   email: String!
   firstName: String
@@ -47,6 +59,12 @@ input AdminListCompanyInput {
   skip: Int = 0
 }
 
+input AdminListReporterInput {
+  limit: Int = 10
+  name: String
+  skip: Int = 0
+}
+
 input AdminUpdateCompanyInput {
   addressLine1: String
   addressLine2: String
@@ -56,6 +74,18 @@ input AdminUpdateCompanyInput {
   phoneNumber: String
   postalCode: String
   stateOrProvince: String
+}
+
+input AdminUpdateReporterInput {
+  addressCity: String
+  addressLine1: String
+  addressLine2: String
+  addressPostalCode: String
+  addressState: String
+  faxNumber: String
+  name: String
+  phoneNumber: String
+  profession: String
 }
 
 input AdminUpdateUserInput {
@@ -141,11 +171,14 @@ type Mutation {
   accountUpdateProfile(input: AccountUpdateProfileInput!): User
   accountUpdateUsername(username: String!): User
   adminCreateCompany(input: AdminCreateCompanyInput!): Company
+  adminCreateReporter(input: AdminCreateReporterInput!): Reporter
   adminCreateUser(input: AdminCreateUserInput!): User
   adminDeleteCompany(companyId: String!): Company
+  adminDeleteReporter(reporterId: String!): Reporter
   adminDeleteUser(userId: String!): User
   adminSetUserPassword(password: String!, userId: String!): User
   adminUpdateCompany(companyId: String!, input: AdminUpdateCompanyInput!): Company
+  adminUpdateReporter(input: AdminUpdateReporterInput!, reporterId: String!): Reporter
   adminUpdateUser(input: AdminUpdateUserInput!, userId: String!): User
   intercomPub(payload: JSON, scope: String, type: String!): IntercomMessage
   login(input: LoginInput!): AuthToken
@@ -160,11 +193,15 @@ type Query {
   adminCompany(companyId: String!): Company
   adminCompanys(input: AdminListCompanyInput): [Company!]
   adminCountCompanys(input: AdminListCompanyInput): CorePaging
+  adminCountReporters(input: AdminListReporterInput): CorePaging
   adminCountUsers(paging: CorePagingInput): CorePaging
+  adminReporter(reporterId: String!): Reporter
+  adminReporters(input: AdminListReporterInput): [Reporter!]
   adminUser(userId: String!): User
   adminUsers(paging: CorePagingInput): [User!]
   me: User
   publicCompanys: [Company!]
+  publicReporters: [Reporter!]
   uptime: Float
 }
 
@@ -176,6 +213,21 @@ input RegisterInput {
   password: String!
   phone: String
   username: String
+}
+
+type Reporter {
+  addressCity: String
+  addressLine1: String
+  addressLine2: String
+  addressPostalCode: String
+  addressState: String
+  createdAt: DateTime
+  faxNumber: String
+  id: String
+  name: String
+  phoneNumber: String
+  profession: String
+  updatedAt: DateTime
 }
 
 enum Role {

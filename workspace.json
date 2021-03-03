@@ -1186,6 +1186,110 @@
           }
         }
       }
+    },
+    "api-reporter-data-access": {
+      "root": "libs/api/reporter/data-access",
+      "sourceRoot": "libs/api/reporter/data-access/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/api/reporter/data-access/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/api/reporter/data-access"
+          ],
+          "options": {
+            "jestConfig": "libs/api/reporter/data-access/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "api-reporter-feature": {
+      "root": "libs/api/reporter/feature",
+      "sourceRoot": "libs/api/reporter/feature/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/api/reporter/feature/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/api/reporter/feature"
+          ],
+          "options": {
+            "jestConfig": "libs/api/reporter/feature/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-reporter-feature": {
+      "projectType": "library",
+      "root": "libs/web/reporter/feature",
+      "sourceRoot": "libs/web/reporter/feature/src",
+      "prefix": "reporter",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/web/reporter/feature/src/**/*.ts",
+              "libs/web/reporter/feature/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/web/reporter/feature"
+          ],
+          "options": {
+            "jestConfig": "libs/web/reporter/feature/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-reporter-ui": {
+      "projectType": "library",
+      "root": "libs/web/reporter/ui",
+      "sourceRoot": "libs/web/reporter/ui/src",
+      "prefix": "reporter",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/web/reporter/ui/src/**/*.ts",
+              "libs/web/reporter/ui/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/web/reporter/ui"
+          ],
+          "options": {
+            "jestConfig": "libs/web/reporter/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

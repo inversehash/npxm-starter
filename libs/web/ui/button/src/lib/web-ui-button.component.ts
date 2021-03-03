@@ -20,9 +20,15 @@ export class WebUiButtonComponent {
   @Input() disabled?: boolean
   @Input() label: string
   @Input() type = 'button'
+  @Input() class?: string
   @Output() handler = new EventEmitter()
 
   get classes(): string {
-    return 'inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-300 bg-indigo-900 border-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+    console.log(this.class);
+    if(this.class === undefined){
+      return 'inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-300 bg-indigo-900 border-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+    }else{
+      return this.class;
+    }
   }
 }

@@ -50,6 +50,18 @@ export type AdminCreateCompanyInput = {
   stateOrProvince: Scalars['String']
 }
 
+export type AdminCreateReporterInput = {
+  addressCity?: Maybe<Scalars['String']>
+  addressLine1?: Maybe<Scalars['String']>
+  addressLine2?: Maybe<Scalars['String']>
+  addressPostalCode?: Maybe<Scalars['String']>
+  addressState?: Maybe<Scalars['String']>
+  faxNumber?: Maybe<Scalars['String']>
+  name: Scalars['String']
+  phoneNumber?: Maybe<Scalars['String']>
+  profession?: Maybe<Scalars['String']>
+}
+
 export type AdminCreateUserInput = {
   email: Scalars['String']
   firstName?: Maybe<Scalars['String']>
@@ -64,6 +76,12 @@ export type AdminListCompanyInput = {
   skip?: Maybe<Scalars['Int']>
 }
 
+export type AdminListReporterInput = {
+  limit?: Maybe<Scalars['Int']>
+  name?: Maybe<Scalars['String']>
+  skip?: Maybe<Scalars['Int']>
+}
+
 export type AdminUpdateCompanyInput = {
   addressLine1?: Maybe<Scalars['String']>
   addressLine2?: Maybe<Scalars['String']>
@@ -73,6 +91,18 @@ export type AdminUpdateCompanyInput = {
   phoneNumber?: Maybe<Scalars['String']>
   postalCode?: Maybe<Scalars['String']>
   stateOrProvince?: Maybe<Scalars['String']>
+}
+
+export type AdminUpdateReporterInput = {
+  addressCity?: Maybe<Scalars['String']>
+  addressLine1?: Maybe<Scalars['String']>
+  addressLine2?: Maybe<Scalars['String']>
+  addressPostalCode?: Maybe<Scalars['String']>
+  addressState?: Maybe<Scalars['String']>
+  faxNumber?: Maybe<Scalars['String']>
+  name?: Maybe<Scalars['String']>
+  phoneNumber?: Maybe<Scalars['String']>
+  profession?: Maybe<Scalars['String']>
 }
 
 export type AdminUpdateUserInput = {
@@ -154,11 +184,14 @@ export type Mutation = {
   accountUpdateProfile?: Maybe<User>
   accountUpdateUsername?: Maybe<User>
   adminCreateCompany?: Maybe<Company>
+  adminCreateReporter?: Maybe<Reporter>
   adminCreateUser?: Maybe<User>
   adminDeleteCompany?: Maybe<Company>
+  adminDeleteReporter?: Maybe<Reporter>
   adminDeleteUser?: Maybe<User>
   adminSetUserPassword?: Maybe<User>
   adminUpdateCompany?: Maybe<Company>
+  adminUpdateReporter?: Maybe<Reporter>
   adminUpdateUser?: Maybe<User>
   intercomPub?: Maybe<IntercomMessage>
   login?: Maybe<AuthToken>
@@ -202,12 +235,20 @@ export type MutationAdminCreateCompanyArgs = {
   input: AdminCreateCompanyInput
 }
 
+export type MutationAdminCreateReporterArgs = {
+  input: AdminCreateReporterInput
+}
+
 export type MutationAdminCreateUserArgs = {
   input: AdminCreateUserInput
 }
 
 export type MutationAdminDeleteCompanyArgs = {
   companyId: Scalars['String']
+}
+
+export type MutationAdminDeleteReporterArgs = {
+  reporterId: Scalars['String']
 }
 
 export type MutationAdminDeleteUserArgs = {
@@ -222,6 +263,11 @@ export type MutationAdminSetUserPasswordArgs = {
 export type MutationAdminUpdateCompanyArgs = {
   companyId: Scalars['String']
   input: AdminUpdateCompanyInput
+}
+
+export type MutationAdminUpdateReporterArgs = {
+  input: AdminUpdateReporterInput
+  reporterId: Scalars['String']
 }
 
 export type MutationAdminUpdateUserArgs = {
@@ -251,11 +297,15 @@ export type Query = {
   adminCompany?: Maybe<Company>
   adminCompanys?: Maybe<Array<Company>>
   adminCountCompanys?: Maybe<CorePaging>
+  adminCountReporters?: Maybe<CorePaging>
   adminCountUsers?: Maybe<CorePaging>
+  adminReporter?: Maybe<Reporter>
+  adminReporters?: Maybe<Array<Reporter>>
   adminUser?: Maybe<User>
   adminUsers?: Maybe<Array<User>>
   me?: Maybe<User>
   publicCompanys?: Maybe<Array<Company>>
+  publicReporters?: Maybe<Array<Reporter>>
   uptime?: Maybe<Scalars['Float']>
 }
 
@@ -275,8 +325,20 @@ export type QueryAdminCountCompanysArgs = {
   input?: Maybe<AdminListCompanyInput>
 }
 
+export type QueryAdminCountReportersArgs = {
+  input?: Maybe<AdminListReporterInput>
+}
+
 export type QueryAdminCountUsersArgs = {
   paging?: Maybe<CorePagingInput>
+}
+
+export type QueryAdminReporterArgs = {
+  reporterId: Scalars['String']
+}
+
+export type QueryAdminReportersArgs = {
+  input?: Maybe<AdminListReporterInput>
 }
 
 export type QueryAdminUserArgs = {
@@ -295,6 +357,22 @@ export type RegisterInput = {
   password: Scalars['String']
   phone?: Maybe<Scalars['String']>
   username?: Maybe<Scalars['String']>
+}
+
+export type Reporter = {
+  __typename?: 'Reporter'
+  addressCity?: Maybe<Scalars['String']>
+  addressLine1?: Maybe<Scalars['String']>
+  addressLine2?: Maybe<Scalars['String']>
+  addressPostalCode?: Maybe<Scalars['String']>
+  addressState?: Maybe<Scalars['String']>
+  createdAt?: Maybe<Scalars['DateTime']>
+  faxNumber?: Maybe<Scalars['String']>
+  id?: Maybe<Scalars['String']>
+  name?: Maybe<Scalars['String']>
+  phoneNumber?: Maybe<Scalars['String']>
+  profession?: Maybe<Scalars['String']>
+  updatedAt?: Maybe<Scalars['DateTime']>
 }
 
 export enum Role {
@@ -538,6 +616,78 @@ export type IntercomSubSubscription = { __typename?: 'Subscription' } & {
   intercomSub?: Maybe<{ __typename?: 'IntercomMessage' } & IntercomDetailsFragment>
 }
 
+export type ReporterDetailsFragment = { __typename?: 'Reporter' } & Pick<
+  Reporter,
+  | 'id'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'name'
+  | 'addressLine1'
+  | 'addressLine2'
+  | 'addressCity'
+  | 'addressState'
+  | 'addressPostalCode'
+  | 'phoneNumber'
+  | 'profession'
+  | 'faxNumber'
+>
+
+export type AdminReportersQueryVariables = Exact<{
+  input?: Maybe<AdminListReporterInput>
+}>
+
+export type AdminReportersQuery = { __typename?: 'Query' } & {
+  items?: Maybe<Array<{ __typename?: 'Reporter' } & ReporterDetailsFragment>>
+  count?: Maybe<{ __typename?: 'CorePaging' } & CorePagingDetailsFragment>
+}
+
+export type AdminCountReportersQueryVariables = Exact<{
+  input?: Maybe<AdminListReporterInput>
+}>
+
+export type AdminCountReportersQuery = { __typename?: 'Query' } & {
+  count?: Maybe<{ __typename?: 'CorePaging' } & CorePagingDetailsFragment>
+}
+
+export type AdminReporterQueryVariables = Exact<{
+  reporterId: Scalars['String']
+}>
+
+export type AdminReporterQuery = { __typename?: 'Query' } & {
+  item?: Maybe<{ __typename?: 'Reporter' } & ReporterDetailsFragment>
+}
+
+export type AdminCreateReporterMutationVariables = Exact<{
+  input: AdminCreateReporterInput
+}>
+
+export type AdminCreateReporterMutation = { __typename?: 'Mutation' } & {
+  created?: Maybe<{ __typename?: 'Reporter' } & ReporterDetailsFragment>
+}
+
+export type AdminUpdateReporterMutationVariables = Exact<{
+  reporterId: Scalars['String']
+  input: AdminUpdateReporterInput
+}>
+
+export type AdminUpdateReporterMutation = { __typename?: 'Mutation' } & {
+  updated?: Maybe<{ __typename?: 'Reporter' } & ReporterDetailsFragment>
+}
+
+export type AdminDeleteReporterMutationVariables = Exact<{
+  reporterId: Scalars['String']
+}>
+
+export type AdminDeleteReporterMutation = { __typename?: 'Mutation' } & {
+  deleted?: Maybe<{ __typename?: 'Reporter' } & ReporterDetailsFragment>
+}
+
+export type PublicReportersQueryVariables = Exact<{ [key: string]: never }>
+
+export type PublicReportersQuery = { __typename?: 'Query' } & {
+  reporter?: Maybe<Array<{ __typename?: 'Reporter' } & ReporterDetailsFragment>>
+}
+
 export type UserDetailsFragment = { __typename?: 'User' } & Pick<
   User,
   'id' | 'firstName' | 'lastName' | 'name' | 'username' | 'avatarUrl' | 'email' | 'location' | 'phone' | 'bio' | 'role'
@@ -635,6 +785,22 @@ export const IntercomDetailsFragmentDoc = gql`
     type
     scope
     payload
+  }
+`
+export const ReporterDetailsFragmentDoc = gql`
+  fragment ReporterDetails on Reporter {
+    id
+    createdAt
+    updatedAt
+    name
+    addressLine1
+    addressLine2
+    addressCity
+    addressState
+    addressPostalCode
+    phoneNumber
+    profession
+    faxNumber
   }
 `
 export const UserDetailsFragmentDoc = gql`
@@ -1170,6 +1336,152 @@ export class IntercomSubGQL extends Apollo.Subscription<IntercomSubSubscription,
     super(apollo)
   }
 }
+export const AdminReportersDocument = gql`
+  query AdminReporters($input: AdminListReporterInput) {
+    items: adminReporters(input: $input) {
+      ...ReporterDetails
+    }
+    count: adminCountReporters(input: $input) {
+      ...CorePagingDetails
+    }
+  }
+  ${ReporterDetailsFragmentDoc}
+  ${CorePagingDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminReportersGQL extends Apollo.Query<AdminReportersQuery, AdminReportersQueryVariables> {
+  document = AdminReportersDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminCountReportersDocument = gql`
+  query AdminCountReporters($input: AdminListReporterInput) {
+    count: adminCountReporters(input: $input) {
+      ...CorePagingDetails
+    }
+  }
+  ${CorePagingDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminCountReportersGQL extends Apollo.Query<AdminCountReportersQuery, AdminCountReportersQueryVariables> {
+  document = AdminCountReportersDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminReporterDocument = gql`
+  query AdminReporter($reporterId: String!) {
+    item: adminReporter(reporterId: $reporterId) {
+      ...ReporterDetails
+    }
+  }
+  ${ReporterDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminReporterGQL extends Apollo.Query<AdminReporterQuery, AdminReporterQueryVariables> {
+  document = AdminReporterDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminCreateReporterDocument = gql`
+  mutation AdminCreateReporter($input: AdminCreateReporterInput!) {
+    created: adminCreateReporter(input: $input) {
+      ...ReporterDetails
+    }
+  }
+  ${ReporterDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminCreateReporterGQL extends Apollo.Mutation<
+  AdminCreateReporterMutation,
+  AdminCreateReporterMutationVariables
+> {
+  document = AdminCreateReporterDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminUpdateReporterDocument = gql`
+  mutation AdminUpdateReporter($reporterId: String!, $input: AdminUpdateReporterInput!) {
+    updated: adminUpdateReporter(reporterId: $reporterId, input: $input) {
+      ...ReporterDetails
+    }
+  }
+  ${ReporterDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminUpdateReporterGQL extends Apollo.Mutation<
+  AdminUpdateReporterMutation,
+  AdminUpdateReporterMutationVariables
+> {
+  document = AdminUpdateReporterDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const AdminDeleteReporterDocument = gql`
+  mutation AdminDeleteReporter($reporterId: String!) {
+    deleted: adminDeleteReporter(reporterId: $reporterId) {
+      ...ReporterDetails
+    }
+  }
+  ${ReporterDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminDeleteReporterGQL extends Apollo.Mutation<
+  AdminDeleteReporterMutation,
+  AdminDeleteReporterMutationVariables
+> {
+  document = AdminDeleteReporterDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
+export const PublicReportersDocument = gql`
+  query PublicReporters {
+    reporter: publicReporters {
+      ...ReporterDetails
+    }
+  }
+  ${ReporterDetailsFragmentDoc}
+`
+
+@Injectable({
+  providedIn: 'root',
+})
+export class PublicReportersGQL extends Apollo.Query<PublicReportersQuery, PublicReportersQueryVariables> {
+  document = PublicReportersDocument
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo)
+  }
+}
 export const AdminUsersDocument = gql`
   query AdminUsers($paging: CorePagingInput) {
     users: adminUsers(paging: $paging) {
@@ -1334,6 +1646,13 @@ export class ApolloAngularSDK {
     private uptimeGql: UptimeGQL,
     private intercomPubGql: IntercomPubGQL,
     private intercomSubGql: IntercomSubGQL,
+    private adminReportersGql: AdminReportersGQL,
+    private adminCountReportersGql: AdminCountReportersGQL,
+    private adminReporterGql: AdminReporterGQL,
+    private adminCreateReporterGql: AdminCreateReporterGQL,
+    private adminUpdateReporterGql: AdminUpdateReporterGQL,
+    private adminDeleteReporterGql: AdminDeleteReporterGQL,
+    private publicReportersGql: PublicReportersGQL,
     private adminUsersGql: AdminUsersGQL,
     private adminUserGql: AdminUserGQL,
     private adminCreateUserGql: AdminCreateUserGQL,
@@ -1545,6 +1864,77 @@ export class ApolloAngularSDK {
     options?: SubscriptionOptionsAlone<IntercomSubSubscriptionVariables>,
   ) {
     return this.intercomSubGql.subscribe(variables, options)
+  }
+
+  adminReporters(variables?: AdminReportersQueryVariables, options?: QueryOptionsAlone<AdminReportersQueryVariables>) {
+    return this.adminReportersGql.fetch(variables, options)
+  }
+
+  adminReportersWatch(
+    variables?: AdminReportersQueryVariables,
+    options?: WatchQueryOptionsAlone<AdminReportersQueryVariables>,
+  ) {
+    return this.adminReportersGql.watch(variables, options)
+  }
+
+  adminCountReporters(
+    variables?: AdminCountReportersQueryVariables,
+    options?: QueryOptionsAlone<AdminCountReportersQueryVariables>,
+  ) {
+    return this.adminCountReportersGql.fetch(variables, options)
+  }
+
+  adminCountReportersWatch(
+    variables?: AdminCountReportersQueryVariables,
+    options?: WatchQueryOptionsAlone<AdminCountReportersQueryVariables>,
+  ) {
+    return this.adminCountReportersGql.watch(variables, options)
+  }
+
+  adminReporter(variables: AdminReporterQueryVariables, options?: QueryOptionsAlone<AdminReporterQueryVariables>) {
+    return this.adminReporterGql.fetch(variables, options)
+  }
+
+  adminReporterWatch(
+    variables: AdminReporterQueryVariables,
+    options?: WatchQueryOptionsAlone<AdminReporterQueryVariables>,
+  ) {
+    return this.adminReporterGql.watch(variables, options)
+  }
+
+  adminCreateReporter(
+    variables: AdminCreateReporterMutationVariables,
+    options?: MutationOptionsAlone<AdminCreateReporterMutation, AdminCreateReporterMutationVariables>,
+  ) {
+    return this.adminCreateReporterGql.mutate(variables, options)
+  }
+
+  adminUpdateReporter(
+    variables: AdminUpdateReporterMutationVariables,
+    options?: MutationOptionsAlone<AdminUpdateReporterMutation, AdminUpdateReporterMutationVariables>,
+  ) {
+    return this.adminUpdateReporterGql.mutate(variables, options)
+  }
+
+  adminDeleteReporter(
+    variables: AdminDeleteReporterMutationVariables,
+    options?: MutationOptionsAlone<AdminDeleteReporterMutation, AdminDeleteReporterMutationVariables>,
+  ) {
+    return this.adminDeleteReporterGql.mutate(variables, options)
+  }
+
+  publicReporters(
+    variables?: PublicReportersQueryVariables,
+    options?: QueryOptionsAlone<PublicReportersQueryVariables>,
+  ) {
+    return this.publicReportersGql.fetch(variables, options)
+  }
+
+  publicReportersWatch(
+    variables?: PublicReportersQueryVariables,
+    options?: WatchQueryOptionsAlone<PublicReportersQueryVariables>,
+  ) {
+    return this.publicReportersGql.watch(variables, options)
   }
 
   adminUsers(variables?: AdminUsersQueryVariables, options?: QueryOptionsAlone<AdminUsersQueryVariables>) {

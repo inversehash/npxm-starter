@@ -13,6 +13,11 @@ const routes: Routes = [
       // Application routes here
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
 {
+        path: 'reporters',
+        loadChildren: () =>
+          import('@demo/web/reporter/feature').then((m) => m.WebReporterFeatureModule)
+        },
+{
         path: 'companys',
         loadChildren: () =>
           import('@demo/web/company/feature').then((m) => m.WebCompanyFeatureModule)

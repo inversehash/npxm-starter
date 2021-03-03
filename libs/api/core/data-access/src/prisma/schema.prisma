@@ -59,3 +59,18 @@ model Company {
   country         String?
   phoneNumber     String?
 }
+
+model Reporter {
+  id                String   @id @default(cuid())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
+  name              String
+  addressLine1      String?
+  addressLine2      String?
+  addressCity       String?
+  addressState      String?
+  addressPostalCode String?
+  phoneNumber       String?
+  profession        String?
+  faxNumber         String?
+}

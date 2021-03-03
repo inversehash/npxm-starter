@@ -64,4 +64,25 @@ export class AdminCompanyEditStore extends ComponentStore<CompanyEditState> {
       ),
     ),
   )
+
+  readonly deleteCompanyEffect = this.effect<AdminUpdateCompanyInput>((input$) =>
+    input$.pipe(
+      tap(() => this.patchState({ loading: true })),
+      withLatestFrom(this.item$),
+      switchMap(([input, item]) =>
+        this.data.adminDeleteCompany({ companyId: item.id }).pipe(
+          tapResponse(
+            (res) => {
+              this.patchState({ item: res.data.deleted, errors: res.errors, loading: false })
+            },
+            (errors: any) =>
+              this.patchState({
+                loading: false,
+                errors: errors.graphQLErrors ? errors.graphQLErrors : errors,
+              }),
+          ),
+        ),
+      ),
+    ),
+  )
 }

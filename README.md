@@ -2,7 +2,7 @@
 
 This project was generated using [@nxpm/stack](https://github.com/nxpm/stack) which is based on [Nx](https://nx.dev).
 
-<p align="center"><img src="https://github.com/inversehash/npxm-starter/raw/dev/libs/web/assets/src/assets/images/logo.png" width="450"></p>
+<p align="center"><img src="https://e7.pngegg.com/pngimages/957/974/png-clipart-hospital-logo-clinic-health-care-physician-business.png" width="450"></p>
 
 # Setup
 

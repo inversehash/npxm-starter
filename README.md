@@ -1,4 +1,4 @@
-# Web
+# NXPM-STACK DEMO PROJECT
 
 This project was generated using [@nxpm/stack](https://github.com/nxpm/stack) which is based on [Nx](https://nx.dev).
 

@@ -9,20 +9,22 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  role      Role
-  developer Boolean  @default(false)
-  username  String   @unique
-  password  String?
-  firstName String?
-  lastName  String?
-  avatarUrl String?
-  location  String?
-  phone     String?
-  bio       String?
-  emails    Email[]  @relation("Email_belongsTo_Owner")
+  id                       String     @id @default(cuid())
+  createdAt                DateTime   @default(now())
+  updatedAt                DateTime   @default(now()) @updatedAt
+  role                     Role
+  developer                Boolean    @default(false)
+  username                 String     @unique
+  password                 String?
+  firstName                String?
+  lastName                 String?
+  avatarUrl                String?
+  location                 String?
+  phone                    String?
+  bio                      String?
+  emails                   Email[]    @relation("Email_belongsTo_Owner")
+  studiesCoordinated       Research[] @relation("Study_Coordinator_User")
+  principalInvestigatorFor Research[] @relation("Principal_Investigator_User")
 }
 
 enum Role {
@@ -46,24 +48,38 @@ model Email {
   // @@unique([ownerId, primary])
 }
 
-model Company {
-  id              String   @id @default(cuid())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  name            String
-  addressLine1    String?
-  addressLine2    String?
-  city            String?
-  stateOrProvince String?
-  postalCode      String?
-  country         String?
-  phoneNumber     String?
+model Research {
+  id                      String   @id @default(cuid())
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @default(now()) @updatedAt
+  name                    String
+  fullStudyTitle          String
+  principalInvestigatorId String?
+  principalInvestigator   User?    @relation(name: "Principal_Investigator_User", fields: [principalInvestigatorId], references: [id])
+  studyCoordinatorId      String?
+  studyCoordinator        User?    @relation(name: "Study_Coordinator_User", fields: [studyCoordinatorId], references: [id])
+  sponsor                 Company  @relation(fields: [companyId], references: [id])
+  companyId               String
+}
+
+model PatientDetails {
+  id                          String    @id @default(cuid())
+  createdAt                   DateTime  @default(now())
+  updatedAt                   DateTime  @default(now()) @updatedAt
+  name                        String
+  initials                    String?
+  clinicalInvestigationNumber String?
+  Gender                      Gender?
+  Age                         String?
+  DateOfBirthdate             DateTime?
+  Weight                      String?
+  Height                      String?
 }
 
 model Reporter {
-  id                String   @id @default(cuid())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @default(now()) @updatedAt
+  id                String         @id @default(cuid())
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @default(now()) @updatedAt
   name              String
   addressLine1      String?
   addressLine2      String?
@@ -73,13 +89,148 @@ model Reporter {
   phoneNumber       String?
   profession        String?
   faxNumber         String?
+  AdverseEvent      AdverseEvent[]
+}
+
+model InstitutionalReviewBoard {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  name      String
+}
+
+model AdverseEvent {
+  id                              String              @id @default(cuid())
+  createdAt                       DateTime            @default(now())
+  updatedAt                       DateTime            @default(now()) @updatedAt
+  name                            String
+  reportedOn                      DateTime?
+  reportedBy                      Reporter            @relation(fields: [reporterId], references: [id])
+  medicinalProducts               MedicinalProducts[]
+  fullDescriptionOfReaction       String?
+  startDateOfReaction             DateTime?
+  stopDateOfReaction              DateTime?
+  dechallengeInformation          String?
+  rechallengeInformation          String?
+  setting                         AdverseEventSetting @default(Other)
+  outcome                         String?
+  reportingSource                 ReportingSource     @default(Other)
+  reportingDetails                String?
+  dateEventReportWasFirstReceived DateTime?
+  countryInWhichEventOccurred     String?
+  reportType                      ReportType          @default(Initial)
+  reporterId                      String
+}
+
+model MedicinalProducts {
+  id             String               @id @default(cuid())
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @default(now()) @updatedAt
+  name           String
+  role           MedicinalProductRole @default(Suspected)
+  adverseEventId String?
+  adverseEvent   AdverseEvent?        @relation(fields: [adverseEventId], references: [id])
+  drugId         String?
+  drug           Drug?                @relation(fields: [drugId], references: [id])
+  manufacturer   Company              @relation(fields: [companyId], references: [id])
+  companyId      String
+}
+
+enum MedicinalProductRole {
+  Suspected
+  Concomitant
+}
+
+enum AdverseEventType {
+  AdverseEvent
+  AdverseExperience
+  AdverseDrugReaction
+  UnexpectedAdverseDrugReaction
 }
 
 model Provider {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   name      String
   firstName String?
   lastName  String?
+}
+
+model Drug {
+  id                              String                    @id @default(cuid())
+  createdAt                       DateTime                  @default(now())
+  updatedAt                       DateTime                  @default(now()) @updatedAt
+  drugType                        DrugType
+  brandName                       String?
+  InternationalNonProprietaryName String?
+  batchNumber                     String?
+  indications                     String?
+  dosageForm                      String?
+  dosageStrength                  String?
+  dailyDose                       String?
+  dailyRegimen                    String?
+  routeOfAdministration           String?
+  startingDateAndTime             DateTime?
+  stoppingDateAndTime             DateTime?
+  identifyingRegulatoryCode       String?
+  identifyingRegulatoryCodeType   IdentifyingRegulatoryCode
+  manufacturerIentificationNumber String?
+  MedicinalProducts               MedicinalProducts[]
+}
+
+enum DrugType {
+  OverTheCounter
+  NonPrescription
+  Prescription
+  NonMedicinalProductTherapies
+}
+
+enum Gender {
+  Male
+  Female
+  Nonbinary
+}
+
+enum AdverseEventSetting {
+  Hospital
+  OutPatientClinic
+  Home
+  SkilledNursingFacility
+  Other
+}
+
+model Company {
+  id                String              @id @default(cuid())
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @default(now()) @updatedAt
+  name              String
+  addressLine1      String?
+  addressLine2      String?
+  city              String?
+  stateOrProvince   String?
+  postalCode        String?
+  country           String?
+  phoneNumber       String?
+  Research          Research[]
+  MedicinalProducts MedicinalProducts[]
+}
+
+enum ReportingSource {
+  Spontaneous
+  ClinicalInvestigation
+  Literature
+  Other
+}
+
+enum ReportType {
+  Initial
+  FirstFollowUp
+  SecondFollowUp
+}
+
+enum IdentifyingRegulatoryCode {
+  IND
+  CTX
+  NDA
 }

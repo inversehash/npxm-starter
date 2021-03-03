@@ -1,0 +1,53 @@
+fragment ProviderDetails on Provider {
+  id
+  createdAt
+  updatedAt
+  name
+  firstName
+  lastName
+}
+
+query AdminProviders($input: AdminListProviderInput) {
+  items: adminProviders(input: $input) {
+    ...ProviderDetails
+  }
+  count: adminCountProviders(input: $input) {
+    ...CorePagingDetails
+  }
+}
+
+query AdminCountProviders($input: AdminListProviderInput) {
+  count: adminCountProviders(input: $input) {
+    ...CorePagingDetails
+  }
+}
+
+query AdminProvider($providerId: String!) {
+  item: adminProvider(providerId: $providerId) {
+    ...ProviderDetails
+  }
+}
+
+mutation AdminCreateProvider($input: AdminCreateProviderInput!) {
+  created: adminCreateProvider(input: $input) {
+    ...ProviderDetails
+  }
+}
+
+mutation AdminUpdateProvider($providerId: String!, $input: AdminUpdateProviderInput!) {
+  updated: adminUpdateProvider(providerId: $providerId, input: $input) {
+    ...ProviderDetails
+  }
+}
+
+mutation AdminDeleteProvider($providerId: String!) {
+  deleted: adminDeleteProvider(providerId: $providerId) {
+    ...ProviderDetails
+  }
+}
+
+query PublicProviders {
+	provider : publicProviders {
+		...ProviderDetails
+	}
+}

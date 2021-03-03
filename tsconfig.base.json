@@ -57,7 +57,11 @@
       "@demo/api/reporter/data-access": ["libs/api/reporter/data-access/src/index.ts"],
       "@demo/api/reporter/feature": ["libs/api/reporter/feature/src/index.ts"],
       "@demo/web/reporter/feature": ["libs/web/reporter/feature/src/index.ts"],
-      "@demo/web/reporter/ui": ["libs/web/reporter/ui/src/index.ts"]
+      "@demo/web/reporter/ui": ["libs/web/reporter/ui/src/index.ts"],
+      "@demo/api/provider/data-access": ["libs/api/provider/data-access/src/index.ts"],
+      "@demo/api/provider/feature": ["libs/api/provider/feature/src/index.ts"],
+      "@demo/web/provider/feature": ["libs/web/provider/feature/src/index.ts"],
+      "@demo/web/provider/ui": ["libs/web/provider/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

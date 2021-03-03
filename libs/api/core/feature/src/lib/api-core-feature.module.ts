@@ -6,6 +6,7 @@ import { join } from 'path'
 import { ApiAccountFeatureModule } from '@demo/api/account/feature'
 import { ApiAuthFeatureModule } from '@demo/api/auth/feature'
 import { ApiUserFeatureModule } from '@demo/api/user/feature'
+import { ApiProviderFeatureModule } from '@demo/api/provider/feature';
 import { ApiReporterFeatureModule } from '@demo/api/reporter/feature';
 import { ApiCompanyFeatureModule } from '@demo/api/company/feature';
 
@@ -30,6 +31,7 @@ import { ApiCoreFeatureService } from './api-core-feature.service'
     ApiAccountFeatureModule,
     ApiAuthFeatureModule,
     ApiUserFeatureModule,
+    ApiProviderFeatureModule,
     ApiReporterFeatureModule,
     ApiCompanyFeatureModule,
   ],

@@ -61,7 +61,11 @@
     "api-reporter-data-access": { "tags": ["scope:api", "type:data-access"] },
     "api-reporter-feature": { "tags": ["scope:api", "type:feature"] },
     "web-reporter-feature": { "tags": ["scope:web", "type:feature"] },
-    "web-reporter-ui": { "tags": ["scope:web", "type:ui"] }
+    "web-reporter-ui": { "tags": ["scope:web", "type:ui"] },
+    "api-provider-data-access": { "tags": ["scope:api", "type:data-access"] },
+    "api-provider-feature": { "tags": ["scope:api", "type:feature"] },
+    "web-provider-feature": { "tags": ["scope:web", "type:feature"] },
+    "web-provider-ui": { "tags": ["scope:web", "type:ui"] }
   },
   "plugins": {
     "@nxpm/stack": {

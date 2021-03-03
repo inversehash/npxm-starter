@@ -14,6 +14,10 @@ import { WebAdminFeatureComponent } from './web-admin-feature.component'
         component: WebAdminFeatureComponent,
         children: [
           { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+{ path: 'providers',
+                  loadChildren: () => import('./admin-provider/admin-provider.module')
+                    .then((m) => m.AdminProviderModule) },
+        
 { path: 'reporters',
                   loadChildren: () => import('./admin-reporter/admin-reporter.module')
                     .then((m) => m.AdminReporterModule) },

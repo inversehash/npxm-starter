@@ -74,3 +74,12 @@ model Reporter {
   profession        String?
   faxNumber         String?
 }
+
+model Provider {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  firstName String?
+  lastName  String?
+}

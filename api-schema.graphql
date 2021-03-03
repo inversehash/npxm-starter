@@ -33,6 +33,12 @@ input AdminCreateCompanyInput {
   stateOrProvince: String!
 }
 
+input AdminCreateProviderInput {
+  firstName: String
+  lastName: String
+  name: String!
+}
+
 input AdminCreateReporterInput {
   addressCity: String
   addressLine1: String
@@ -59,6 +65,12 @@ input AdminListCompanyInput {
   skip: Int = 0
 }
 
+input AdminListProviderInput {
+  limit: Int = 10
+  name: String
+  skip: Int = 0
+}
+
 input AdminListReporterInput {
   limit: Int = 10
   name: String
@@ -74,6 +86,12 @@ input AdminUpdateCompanyInput {
   phoneNumber: String
   postalCode: String
   stateOrProvince: String
+}
+
+input AdminUpdateProviderInput {
+  firstName: String
+  lastName: String
+  name: String
 }
 
 input AdminUpdateReporterInput {
@@ -171,19 +189,31 @@ type Mutation {
   accountUpdateProfile(input: AccountUpdateProfileInput!): User
   accountUpdateUsername(username: String!): User
   adminCreateCompany(input: AdminCreateCompanyInput!): Company
+  adminCreateProvider(input: AdminCreateProviderInput!): Provider
   adminCreateReporter(input: AdminCreateReporterInput!): Reporter
   adminCreateUser(input: AdminCreateUserInput!): User
   adminDeleteCompany(companyId: String!): Company
+  adminDeleteProvider(providerId: String!): Provider
   adminDeleteReporter(reporterId: String!): Reporter
   adminDeleteUser(userId: String!): User
   adminSetUserPassword(password: String!, userId: String!): User
   adminUpdateCompany(companyId: String!, input: AdminUpdateCompanyInput!): Company
+  adminUpdateProvider(input: AdminUpdateProviderInput!, providerId: String!): Provider
   adminUpdateReporter(input: AdminUpdateReporterInput!, reporterId: String!): Reporter
   adminUpdateUser(input: AdminUpdateUserInput!, userId: String!): User
   intercomPub(payload: JSON, scope: String, type: String!): IntercomMessage
   login(input: LoginInput!): AuthToken
   logout: Boolean
   register(input: RegisterInput!): AuthToken
+}
+
+type Provider {
+  createdAt: DateTime
+  firstName: String
+  id: String
+  lastName: String
+  name: String
+  updatedAt: DateTime
 }
 
 type Query {
@@ -193,14 +223,18 @@ type Query {
   adminCompany(companyId: String!): Company
   adminCompanys(input: AdminListCompanyInput): [Company!]
   adminCountCompanys(input: AdminListCompanyInput): CorePaging
+  adminCountProviders(input: AdminListProviderInput): CorePaging
   adminCountReporters(input: AdminListReporterInput): CorePaging
   adminCountUsers(paging: CorePagingInput): CorePaging
+  adminProvider(providerId: String!): Provider
+  adminProviders(input: AdminListProviderInput): [Provider!]
   adminReporter(reporterId: String!): Reporter
   adminReporters(input: AdminListReporterInput): [Reporter!]
   adminUser(userId: String!): User
   adminUsers(paging: CorePagingInput): [User!]
   me: User
   publicCompanys: [Company!]
+  publicProviders: [Provider!]
   publicReporters: [Reporter!]
   uptime: Float
 }

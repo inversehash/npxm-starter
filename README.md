@@ -2,8 +2,6 @@
 
 This project was generated using [@nxpm/stack](https://github.com/nxpm/stack) which is based on [Nx](https://nx.dev).
 
-<p align="center"><img src="https://e7.pngegg.com/pngimages/957/974/png-clipart-hospital-logo-clinic-health-care-physician-business.png" width="450"></p>
-
 # Setup
 
 After download this project, you first need to run the setup.
